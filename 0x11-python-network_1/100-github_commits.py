@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-10 most recent commits on a given GitHub repository.
+"""lists most recent commits GitHub repository.
 """
 import sys
 import requests
