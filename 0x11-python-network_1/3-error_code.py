@@ -5,13 +5,17 @@
 - displays body response utf-8
 """
 
+import sys
+import urllib.error
+import urllib.request
+
 
 if __name__ == "__main__":
-    import sys
-    from urllib import request, error
+    url = sys.argv[1]
 
+    request = urllib.request.Request(url)
     try:
-        with request.urlopen(sys.argv[1]) as res:
-            print(res.read().decode('UTF-8'))
-    except error.HTTPError as er:
-        print('Error code:', er.code)
+        with urllib.request.urlopen(request) as response:
+            print(response.read().decode("ascii"))
+    except urllib.error.HTTPError as e:
+        print("Error code: {}".format(e.code))
