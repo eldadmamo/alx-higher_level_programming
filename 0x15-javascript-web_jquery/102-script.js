@@ -2,15 +2,15 @@
 
 // Ensure the DOM executing the script
 $(document).ready(function () {
-  // Attach a click event handl
-  $('#btn_translate').click(function () {
-    // Fetch the language 
-    const languageCode = $('#language_code').val();
-
-    // Make a GET request to the API
-    $.get(`https://www.fourtonfish.com/hellosalut/hello/${languageCode}`, function (data) {
-      // Display translation in DIV#hello
-      $('#hello').text(data.hello);
+  $('INPUT#btn_translate').click(function () {
+    $('DIV#hello').empty();
+    const len = $('INPUT#language_code').val();
+    $.ajax({
+      type: 'GET',
+      url: 'https://fourtonfish.com/hellosalut/?lang=' + len,
+      success: function (data) {
+        $('DIV#hello').append(data.hello);
+      }
     });
   });
 });

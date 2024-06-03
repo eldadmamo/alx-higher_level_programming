@@ -2,26 +2,24 @@
 
 // Ensure the DOM executing the script
 $(document).ready(function () {
-  // Attach a click event handler 
-  $('#btn_translate').click(fetchTranslation);
-
-  // Attach a keypress event handler
-  $('#language_code').keypress(function (event) {
-    // Check pressed key is ENTER (key code 13)
-    if (event.which === 13) {
-      fetchTranslation();
-    }
-  });
-
-  // Function to fetch and display translation
-  function fetchTranslation() {
-    // Fetch the language code 
-    const languageCode = $('#language_code').val();
-
-    // Make a GET request to the specified language code
-    $.get(`https://www.fourtonfish.com/hellosalut/hello/${languageCode}`, function (data) {
-      // Display the fetched translation in DIV#hello
-      $('#hello').text(data.hello);
+  function translate () {
+    $('DIV#hello').empty();
+    const len = $('INPUT#language_code').val();
+    $.ajax({
+      type: 'GET',
+      url: 'https://fourtonfish.com/hellosalut/?lang=' + len,
+      success: function (data) {
+        $('DIV#hello').append(data.hello);
+      }
     });
   }
+  $('INPUT#btn_translate').click(function () {
+    translate();
+  });
+  $('INPUT#language_code').keypress(function (e) {
+    const key = e.which;
+    if (key === 13) {
+      translate();
+    }
+  });
 });
